@@ -113,7 +113,7 @@ public with sharing class CarsUtils {
     @AuraEnabled
     public static List<Car__c> getFilteredCars(String sellerId, Integer price) {
         try {
-            return [SELECT Id, Name, Model_price__c, Color__c, Number_of_doors__c, Picture__c FROM Car__c WHERE (Seller_custom__c = :sellerId AND Model_price__c >= :price) ORDER BY CreatedDate];
+            return [SELECT Id, Name, Model_price__c, Color__c, Number_of_doors__c, Picture__c, Car_Availability__c FROM Car__c WHERE (Seller_custom__c = :sellerId AND Model_price__c >= :price) ORDER BY CreatedDate];
         } catch(Exception e) {
             System.debug(e.getMessage());
             return null;
