@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Title">
+        
+        <div style="height: 300px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={data}
+                    columns={columns}>
+            </lightning-datatable>
+        </div>
+
+        <c-report-chart></c-report-chart>
+    </lightning-card>
+</template>

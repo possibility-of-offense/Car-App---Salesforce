@@ -1,0 +1,19 @@
+<template>
+    <div>
+        <lightning-modal-header label="Add model"></lightning-modal-header>
+        <lightning-modal-body> 
+            <c-spinner show-spinner={addingModel} spinner-size="medium"></c-spinner>
+            <!-- Show error -->
+            <div lwc:if={error}>
+                <p class="error-text">{error}</p>
+            </div>
+
+            <lightning-input type="text" required minlength="5" name="name" label="Name" value={name} onchange={handleChangeInput}></lightning-input>    
+            <lightning-input type="number" required maxlength="10" name="price" label="Price" value={price} onchange={handleChangeInput}></lightning-input>    
+            <lightning-input type="checkbox" name="ecoFriendly" label="Eco friendly" value={ecoFriendly}></lightning-input>    
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>

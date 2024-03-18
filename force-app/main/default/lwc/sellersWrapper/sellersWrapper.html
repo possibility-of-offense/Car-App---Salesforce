@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Sellers">
+        <lightning-tabset class="tabs">
+            <!-- View sellers tab -->
+            <lightning-tab label="View all sellers" onactive={handleShowSellers}>
+                <c-show-all-sellers
+                    ajax-loading={ajaxLoading}
+                    onrefetching={handleShowSellers}
+                    sellers={sellers}
+                ></c-show-all-sellers>
+            </lightning-tab>
+
+            <!-- Add seller (with form) tab -->
+            <lightning-tab label="Add a seller">
+                <div class="slds-var-p-around_medium">
+                    <lightning-input type="text" required minlength="5" name="name" label="Name" value={name} onchange={handleChangeInput}></lightning-input>
+                    <lightning-input type="text" required minlength="5" name="location" label="Location" value={location} onchange={handleChangeInput}></lightning-input>
+                    <lightning-input type="text" required minlength="5" name="ceo" label="CEO" value={ceo} onchange={handleChangeInput}></lightning-input>
+                    <lightning-input type="tel" required minlength="5" pattern="[0-9]{4}/[0-9]{6}" name="phone" label="Phone" value={phone} onchange={handleChangeInput}></lightning-input>
+                    <lightning-input type="number" required maxlength="4" name="numberOfCars" label="Number of cars" value={numberOfCars} onchange={handleChangeInput}></lightning-input>
+                    <br />
+                    <!-- Show loading spinner if seller is being added -->
+                    <div lwc:if={ajaxLoading}>
+                        <c-spinner show-spinner={ajaxLoading} spinner-size="small"></c-spinner>
+                    </div>
+                    <div lwc:else>
+                        <!-- Show button instead -->
+                        <lightning-button label="Add Seller" onclick={handleAddSeller}></lightning-button>
+                    </div>
+                </div>
+            </lightning-tab>
+
+            <!-- Set sale price -->
+            <lightning-tab label="Add sale price">
+                <c-set-sale-price-for-car></c-set-sale-price-for-car>
+            </lightning-tab>
+
+            <!-- Show cars on sale -->
+            <lightning-tab label="See cars on sale" onactive={handleNotifyComponent}>
+                <c-show-cars-on-sale notifications={notifications} remove-notification={removeNotification}></c-show-cars-on-sale>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

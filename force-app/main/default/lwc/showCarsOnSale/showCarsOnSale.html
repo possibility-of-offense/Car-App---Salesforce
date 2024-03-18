@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Cars on sale"></lightning-card>
+    <c-spinner show-spinner={ajaxLoading}></c-spinner>
+    <lightning-datatable
+        key-field="id"
+        data={data}
+        columns={columns}
+        onrowselection={handleHeaderAction}
+    >
+    </lightning-datatable>
+    <template lwc:if={showRemoveSalePriceButton}>
+        <br />
+        <lightning-button label="Remove sale price" onclick={handleRemoveSalePrice}></lightning-button>
+    </template>
+</template>

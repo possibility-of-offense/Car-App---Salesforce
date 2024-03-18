@@ -1,0 +1,43 @@
+<template>
+    <div style={backgroundImageStyle} class={wrapperDivClasses}>
+
+        <template lwc:if={showNodesWhenCarIsNotDeleted}>
+            <div class="icons">
+                <lightning-button-icon
+                    alternative-text="Buy car"
+                    title="Buy car" 
+                    onclick={handleBuyCar} 
+                    class="buy-car-icon"
+                    icon-name="utility:shopping_bag"
+                ><label>Buy car</label></lightning-button-icon>
+                &nbsp;
+                <lightning-button-icon
+                    alternative-text="Delete car"
+                    variant="brand" 
+                    title="Delete car" 
+                    onclick={handleClickDeleteIcon} 
+                    class="delete-car-icon"
+                    icon-name="action:delete"
+                ><label>Delete car</label></lightning-button-icon>
+            </div>
+            <div class="availability">
+                {availabilityText}
+            </div>
+    
+            <div class="overlay-bottom-banner">
+                <h3>
+                    <a
+                        class="link-to-car"
+                        title={car.Name}
+                        href={recordUrl}
+                        target="_blank"
+                    >
+                        {car.Name}
+                    </a>
+                </h3>
+                <p>Price: {car.Model_price__c} | Color: {car.Color__c}</p>
+                <p>{car.Number_of_doors__c} Doors</p>
+            </div>
+        </template>
+    </div>
+</template>

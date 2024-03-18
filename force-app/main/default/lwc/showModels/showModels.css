@@ -1,0 +1,51 @@
+@import 'c/sharedCssLibrary';
+
+.show-models ul {
+    display: block !important;
+    height: 400px !important;
+    overflow-y: scroll;
+    position: relative;
+    border-top: 1px solid #605f5f;
+}
+
+.show-models li {
+    width: 100%;
+    display: flex;
+    transition: background-color .2s ease-in-out;
+}
+
+.show-models li:hover {
+    background-color: #f4f4f4;
+}
+
+.show-models li .icons {
+    margin-left: auto;
+}
+
+.add-model {
+    position: absolute;
+    top: 10px;
+    right: 7px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 13px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fefefe;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(0, 105, 255);
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+}
+  
+.model-error {
+    color: red;
+    font-weight: 500;
+}

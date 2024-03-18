@@ -1,0 +1,53 @@
+@import 'c/sharedCssLibrary';
+
+[class^="single-car"] {
+    height: 240px;
+    position: relative;
+}
+
+.icons {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    z-index: 1;
+}
+
+[class^="single-car"] h3 {
+    font-size: 1.25em;
+    margin-bottom: 6px;
+}
+
+.overlay-bottom-banner {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    padding: 10px;
+}
+
+.link-to-car {
+    color: #fff !important;
+}
+
+.buy-car-icon {
+    --slds-c-button-color-background: green;
+    --slds-c-button-color-background-active: #0d620d;
+    --slds-c-button-color-background-hover: #0d620d;
+    --slds-c-button-text-color: #fff;
+    --slds-c-button-text-color-hover: #fff;
+    --slds-c-button-text-color-active: #fff;
+    --slds-c-icon-color-foreground: #fff;
+}
+
+.availability {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 50%;
+    padding: 5px;
+    background-color: #CB65FF;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 0 0 6px 0;
+}

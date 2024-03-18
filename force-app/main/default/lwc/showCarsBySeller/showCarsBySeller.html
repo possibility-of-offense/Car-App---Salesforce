@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title={title} class="cars__wrapper">
+        <div class="slds-p-left_medium" lwc:if={cars}>
+            <lightning-slider
+                lwc:if={showSliderIfMoreThanOneCar}
+                label="Filter cars by price"
+                min={minPriceSliderRange}
+                max={maxPriceSliderRange}
+                onchange={handleChangeSliderValue}
+                onmouseup={handleReleaseMouse}
+                value={rangeValue}
+            ></lightning-slider>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <ul>
+                <li class="button-item">
+                    <lightning-button class="add-car" label="Add car" onclick={handleAddCarClick}></lightning-button>
+                </li>
+                <li lwc:if={showDeleteButtonIfThereAreCars} class="button-item">
+                    <lightning-button class="delete-all-cars" label={deleteAllCarsBy} onclick={handleDeleteAllCars}></lightning-button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Spinner -->
+        <c-spinner show-spinner={ajaxLoading}></c-spinner>
+        <p class="slds-p-left_medium">{howManyCars}</p>
+        <br />
+
+        <!-- Layout -->
+         <lightning-layout lwc:if={cars} class="cars__grid">
+            <template for:each={cars} for:item="car">
+                <lightning-layout-item key={car.Id} class="single-car">
+                    <c-single-car car={car} oncardeleted={handleDeletedCar} seller-id={sellerId}></c-single-car>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+        <h2 class="slds-p-left_medium" lwc:if={showMessageWhenAjaxIsFinished}>{showMessageWhenAjaxIsFinished}</h2>
+    </lightning-card>
+</template>

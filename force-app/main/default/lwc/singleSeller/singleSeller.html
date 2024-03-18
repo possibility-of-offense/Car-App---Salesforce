@@ -1,0 +1,18 @@
+<template>
+    <li class="flex f-align-items-center slds-var-p-around_x-small single-seller">
+        <lightning-icon icon-name="standard:event" alternative-text="Event" title="Event"></lightning-icon>
+        &nbsp;&nbsp;
+        <a href="#" onclick={handleChangeSeller}>{seller.Name}</a>
+
+        <lightning-button-icon
+            alternative-text="Delete seller"
+            variant="brand-outline" 
+            title="Delete seller" 
+            onclick={handleClickDeleteIcon} 
+            class="delete-icon"
+            icon-name="utility:delete"
+        >
+            <label>Delete seller</label>
+        </lightning-button-icon>
+    </li>
+</template>

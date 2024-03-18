@@ -1,0 +1,16 @@
+<template>
+    <c-spinner lwc:if={loadingData} show-spinner={loadingData} spinner-size="medium"></c-spinner>
+
+    <template lwc:else>
+        <ul lwc:if={sellersExist}>
+            <template for:each={sellers} for:item="seller">
+                <c-single-seller
+                    key={seller.Id}
+                    onstartdeletion={handleStartDeletion}
+                    seller={seller}
+                ></c-single-seller>
+            </template>
+        </ul>
+        <p lwc:else class="no-sellers">No sellers added!</p>
+    </template>
+</template>

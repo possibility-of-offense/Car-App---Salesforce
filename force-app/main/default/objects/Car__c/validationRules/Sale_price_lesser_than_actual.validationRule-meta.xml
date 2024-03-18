@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sale_price_lesser_than_actual</fullName>
+    <active>true</active>
+    <errorConditionFormula>Sale_price__c &gt; Model_price__c</errorConditionFormula>
+    <errorMessage>The sale&apos;s price must be lesser than the actual price</errorMessage>
+</ValidationRule>

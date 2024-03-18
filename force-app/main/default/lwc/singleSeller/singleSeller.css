@@ -1,0 +1,13 @@
+@import 'c/sharedCssLibrary';
+
+.single-seller {
+    transition: background-color .2s ease-in-out;
+}
+
+.single-seller:hover {
+    background-color: var(--bg-light);
+}
+
+.single-seller .delete-icon {
+    margin-left: auto;
+}

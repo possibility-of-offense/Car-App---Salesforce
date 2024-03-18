@@ -1,0 +1,1 @@
+sf org login web --set-default-dev-hub --alias dev-hub

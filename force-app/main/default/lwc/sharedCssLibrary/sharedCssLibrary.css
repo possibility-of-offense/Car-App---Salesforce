@@ -1,0 +1,33 @@
+/* Variables */
+:host {
+  --bg-light: #f4f4f4;
+}
+
+/* Skeleton */
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% {
+      background: hsl(200, 20%, 80%);
+    }
+    100% {
+      background: hsl(200, 20%, 95%);
+    }
+}
+
+/* Layout */
+.flex {
+    display: flex;
+}
+
+.f-align-items-center {
+    align-items: center;
+}
+
+/* Error text */
+.error-text {
+  color: red;
+  font-weight: 500;
+}

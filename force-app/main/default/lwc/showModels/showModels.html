@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Models" class="show-models">
+        <!-- Add model -->
+        <lightning-button class="add-model" label="Add model" onclick={handleAddedModel}></lightning-button>
+
+        <!-- If there is an error -->
+        <p lwc:if={error} class="error-text slds-p-left_small">
+            {error}
+        </p>
+        <br />
+
+        <!-- Spinner -->
+        <c-spinner show-spinner={ajaxLoading} spinner-size="medium"></c-spinner>
+
+        <!-- Models -->
+        <ul class="slds-var-p-around_x-small" lwc:if={models}>
+            <template for:each={models} for:item="model">
+                <li key={model.Id} data-id={model.Id} class="flex f-align-items-center slds-var-p-around_x-small">
+                    <lightning-icon icon-name="custom:custom31" alternative-text="Event" title="Event"></lightning-icon>
+                    &nbsp;&nbsp;
+                    <div>
+                        <p>{model.Name}</p>
+                        <strong>{model.Price__c}$</strong>
+                    </div>
+                    <div class="icons">
+                        <lightning-button-icon
+                            alternative-text="Edit model"
+                            variant="brand-outline"
+                            title="Edit model"
+                            onclick={handleOpenEditModal}
+                            value={model.Id}
+                            class="edit-icon"
+                            icon-name="utility:edit"
+                        ><label>Edit model</label></lightning-button-icon>
+                        &nbsp;
+                        <lightning-button-icon
+                            alternative-text="Delete model"
+                            variant="brand-outline"
+                            title="Delete model"
+                            onclick={handleClickDeleteIcon}
+                            class="delete-icon"
+                            icon-name="utility:delete"
+                        ><label>Delete model</label></lightning-button-icon>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </lightning-card>
+</template>

@@ -1,0 +1,15 @@
+<template>
+    <lightning-modal-header label="Edit model"></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-record-form
+            record-id={recordId}
+            object-api-name={objectApiName}
+            fields={fields}
+            columns="2"
+            mode="edit"
+            layout-type="Full"
+            onsubmit={handleSubmit}
+        >
+        </lightning-record-form>
+    </lightning-modal-body>
+</template>

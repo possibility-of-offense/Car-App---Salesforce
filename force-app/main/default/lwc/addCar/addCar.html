@@ -1,0 +1,39 @@
+<template>
+    <div>
+        <lightning-modal-header label="Add model"></lightning-modal-header>
+        <lightning-modal-body> 
+            <!-- Image Preview -->
+            <div class="image-preview"></div>
+
+            <p lwc:if={error} class="error-text">
+                {error}
+            </p>
+
+            <lightning-record-edit-form
+                object-api-name={objectApiName}
+                onsuccess={handleCarCreated}
+            >
+                <c-spinner show-spinner={ajaxLoading}></c-spinner>
+                <div>
+                    <lightning-input
+                        type="file"
+                        label="Add picture"
+                        accept=".jpg,.png,.gif"
+                        onchange={handleFileSelected}
+                    >
+                    </lightning-input>
+                    <lightning-input-field required field-name={name}></lightning-input-field>
+                    <lightning-input-field field-name={model}></lightning-input-field>
+                    <lightning-input-field field-name={seller}></lightning-input-field>
+                    <lightning-input-field field-name={numberOfDoors}></lightning-input-field>
+                    <lightning-input-field field-name={color}></lightning-input-field>
+                    <lightning-input-field field-name={availability}></lightning-input-field>
+                </div>
+                <lightning-button type="submit" variant="brand" label="Create Account" onclick={handleSubmit}></lightning-button>
+            </lightning-record-edit-form>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>
