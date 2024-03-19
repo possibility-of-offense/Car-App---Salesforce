@@ -23,10 +23,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MyFirstClass</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>SellersUtils</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -70,6 +66,11 @@
         <editable>false</editable>
         <field>Model__c.Eco_friendly__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Seller__c.Sold_Cars__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
         <layout>Car__c-Car Layout</layout>
