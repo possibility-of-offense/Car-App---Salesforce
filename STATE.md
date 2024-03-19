@@ -26,10 +26,10 @@ addCar
 
 showCarsBySeller
 
+singleCar 
+
 === LEFT
 
 listBoughtCars
 
 reportChart
-
-singleCar - BUYING FUNCTIONALITY 

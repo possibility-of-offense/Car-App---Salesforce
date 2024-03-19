@@ -1,14 +1,18 @@
 <template>
-    <lightning-card title="Title">
-        
-        <div style="height: 300px;">
+    <lightning-card title="Bought Cars">
+        <lightning-button label={buttonLabel} onclick={handleButtonClick}></lightning-button>
+        <br />
+
+        <div lwc:if={toShowReportChart} style="height: 300px;">
             <lightning-datatable
-                    key-field="id"
-                    data={data}
-                    columns={columns}>
+                key-field="name"
+                data={data}
+                columns={columns}>
             </lightning-datatable>
         </div>
+        <div lwc:else>
+            <c-report-chart></c-report-chart>
+        </div>
 
-        <c-report-chart></c-report-chart>
     </lightning-card>
 </template>

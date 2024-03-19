@@ -182,4 +182,15 @@ public with sharing class CarsUtils {
             return false;
         }
     }
+
+    // Show bought cars
+    @AuraEnabled
+    public static List<Sold_Car__c> showBoughtCars() {
+        try {
+            return [SELECT Id, Seller__r.Name, Name, Sold_Car_Price__c FROM Sold_Car__c WITH SECURITY_ENFORCED];
+        } catch(Exception e) {
+            System.debug(e.getMessage());
+            return new List<Sold_Car__c>();
+        }
+    }
 }
