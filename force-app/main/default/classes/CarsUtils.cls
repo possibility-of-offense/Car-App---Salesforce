@@ -9,7 +9,7 @@ public with sharing class CarsUtils {
                 if(sellerId == '') {
                     return [SELECT Name FROM Car__c WITH SECURITY_ENFORCED ORDER BY CreatedDate];
                 } else {
-                    return [SELECT Id, Name, Model_price__c, Color__c, Number_of_doors__c, Picture__c, Model__c, Car_Availability__c FROM Car__c WHERE Seller_custom__c = :sellerId WITH SECURITY_ENFORCED ORDER BY CreatedDate];
+                    return [SELECT Id, Name, Model_price__c, Color__c, Number_of_doors__c, Picture__c, Model__c, Car_Availability__c, Sale_price__c FROM Car__c WHERE Seller_custom__c = :sellerId WITH SECURITY_ENFORCED ORDER BY CreatedDate];
                 }
             } else {
                 // 1 - If sellerId is not empty

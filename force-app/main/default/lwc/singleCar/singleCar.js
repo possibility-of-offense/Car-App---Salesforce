@@ -2,6 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { fireEvent } from 'c/pubsub';
 import { CurrentPageReference } from 'lightning/navigation';
+import noCarImage from "@salesforce/resourceUrl/No_car";
 
 import buyCar from '@salesforce/apex/CarsUtils.buyCar';
 import deleteCar from '@salesforce/apex/CarsUtils.deleteCarById';
@@ -15,11 +16,19 @@ export default class SingleCar extends LightningElement {
     ajaxLoading = false;
     ajaxError = null;
 
+    No_Car_Image = noCarImage;
+    _carAvailability;
+
     //
     // Getters
     //
     get wrapperDivClasses() {
-        return `single-car` + (this.ajaxLoading ? ' skeleton' : '');
+        let noImageClass = '';
+        if(!this.car.Picture__c) {
+            noImageClass = 'no-image';
+        }
+
+        return `single-car ${noImageClass}` + (this.ajaxLoading ? ' skeleton' : '');
     }
     get showNodesWhenCarIsNotDeleted() {
         return !this.ajaxLoading;
@@ -28,18 +37,31 @@ export default class SingleCar extends LightningElement {
         return `https://efficiency-power-7355-dev-ed.scratch.lightning.force.com/lightning/r/Car__c/` + this.car.Id + '/view';
     }
     get backgroundImageStyle() {
+        console.log(this.car.Picture__c);
         if(this.car.Picture__c) {
             return `background: url(${this.car.Picture__c}) center/cover no-repeat `;
         } else {
-            return `background-color: #eb687f4f`;
+            return `background: url(${this.No_Car_Image}) center no-repeat; background-size: 150px;`;
         }
     }
     get availabilityText() {
-        if(this.car.Car_Availability__c === 1) {
+        if(this._carAvailability === 1) {
             return '1 Car';
         } else {
-            return this.car.Car_Availability__c + ' cars';
+            return this._carAvailability + ' cars';
         }
+    }
+    get showBuyingButton() {
+        if(this._carAvailability > 0) return true;
+        return false;
+    }
+    get isThereSalePrice() {
+        if(this.car.Sale_price__c && this.car.Sale_price__c < this.car.Model_price__c) return true;
+        return false;
+    }
+
+    connectedCallback() {
+        this._carAvailability = this.car.Car_Availability__c;
     }
 
     @wire(CurrentPageReference) pageRef;
@@ -77,6 +99,9 @@ export default class SingleCar extends LightningElement {
 
     // Handle buy car
     async handleBuyCar() {
+       try {
+        this.ajaxLoading = true;
+
         ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
             await AjaxCalling.call(
                 buyCar.bind(null, {
@@ -87,7 +112,19 @@ export default class SingleCar extends LightningElement {
         ));
 
         if(!this.ajaxError) {
-            alert('BOUGHT ME!');
+            // this.car.Car_Availability__c = this.car.Car_Availability__c - 1;
+            this._carAvailability--;
         }
+
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: !this.ajaxError ? 'Bought car' : 'Buying unsuccessfull',
+                message: !this.ajaxError ? 'The car was bought' : 'The car was not bought',
+                variant: !this.ajaxError ? 'success' : 'error'
+            })
+        );
+       } catch(err) {
+        console.log(err.message);
+       }
     }
 }

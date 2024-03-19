@@ -4,6 +4,7 @@
         <template lwc:if={showNodesWhenCarIsNotDeleted}>
             <div class="icons">
                 <lightning-button-icon
+                    lwc:if={showBuyingButton}
                     alternative-text="Buy car"
                     title="Buy car" 
                     onclick={handleBuyCar} 
@@ -35,7 +36,8 @@
                         {car.Name}
                     </a>
                 </h3>
-                <p>Price: {car.Model_price__c} | Color: {car.Color__c}</p>
+                <p><span><strong>Price:</strong> {car.Model_price__c}</span><span lwc:if={isThereSalePrice}>&nbsp; <strong>Sale:</strong> {car.Sale_price__c}</span></p>
+                <p><strong>Color:</strong> {car.Color__c} </p>
                 <p>{car.Number_of_doors__c} Doors</p>
             </div>
         </template>
