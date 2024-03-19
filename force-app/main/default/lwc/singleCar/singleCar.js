@@ -37,7 +37,6 @@ export default class SingleCar extends LightningElement {
         return `https://efficiency-power-7355-dev-ed.scratch.lightning.force.com/lightning/r/Car__c/` + this.car.Id + '/view';
     }
     get backgroundImageStyle() {
-        console.log(this.car.Picture__c);
         if(this.car.Picture__c) {
             return `background: url(${this.car.Picture__c}) center/cover no-repeat `;
         } else {
@@ -99,7 +98,6 @@ export default class SingleCar extends LightningElement {
 
     // Handle buy car
     async handleBuyCar() {
-       try {
         this.ajaxLoading = true;
 
         ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
@@ -112,7 +110,6 @@ export default class SingleCar extends LightningElement {
         ));
 
         if(!this.ajaxError) {
-            // this.car.Car_Availability__c = this.car.Car_Availability__c - 1;
             this._carAvailability--;
         }
 
@@ -123,8 +120,13 @@ export default class SingleCar extends LightningElement {
                 variant: !this.ajaxError ? 'success' : 'error'
             })
         );
-       } catch(err) {
-        console.log(err.message);
-       }
+
+        fireEvent(
+            this.pageRef,
+            'boughtCar',
+            {
+                detail: this.car.Id
+            }
+        )
     }
 }

@@ -12,7 +12,6 @@ const events = {};
  * @param {object} pageRef2 - The second page reference
  */
 const samePageRef = (pageRef1, pageRef2) => {
-    // console.log(pageRef1, pageRef2);
     const obj1 = pageRef1.attributes;
     const obj2 = pageRef2.attributes;
     return Object.keys(obj1)

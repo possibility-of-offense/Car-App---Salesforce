@@ -28,8 +28,8 @@ showCarsBySeller
 
 singleCar 
 
-=== LEFT
-
 listBoughtCars
+
+=== LEFT
 
 reportChart

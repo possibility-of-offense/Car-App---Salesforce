@@ -83,7 +83,6 @@ export default class ShowCarsOnSale extends LightningElement {
     // When click on the checkbox in the header
     handleHeaderAction(e) {
         this.carsToRemoveSales = e.detail.selectedRows.map(el => el.Id);
-        console.log(e.detail, this.carsToRemoveSales);
     }
 
     // Remove sale price

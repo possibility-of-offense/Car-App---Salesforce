@@ -1,4 +1,4 @@
 <template>
-    <canvas class="chart" lwc:dom="manual" height="150" width="200"></canvas>
-    <h1>Test</h1>
+    <p lwc:if={error} class="error-text slds-var-p-around_medium	">{error}</p>
+    <canvas lwc:else class="chart" lwc:dom="manual" height="150" width="200"></canvas>
 </template>

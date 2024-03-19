@@ -118,6 +118,11 @@ export default class ModelWrapper extends LightningElement {
         this.ceo = '';
         this.phone = '';
         this.numberOfCars = '';
+
+        fireEvent(
+            this.pageRef,
+            'addedSeller'
+        );
     }
 
     // Add seller through imperative callback
@@ -152,10 +157,6 @@ export default class ModelWrapper extends LightningElement {
             console.log('Error ' + err);
         })
     }
-
-
-
-
 
     // TODO
     // Handle notify show cars on sale component
