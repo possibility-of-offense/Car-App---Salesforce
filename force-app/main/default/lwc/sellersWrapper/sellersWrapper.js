@@ -148,7 +148,11 @@ export default class ModelWrapper extends LightningElement {
         this.ajaxError = null;
 
         try {
-            await addSeller({sellerObject: this.sellerObject});
+            const seller = await addSeller({sellerObject: this.sellerObject});
+            fireEvent(this.pageRef, 'addedSeller', {
+                id: seller.Id,
+                name: seller.Name
+            });
         } catch(err) {
             this.ajaxError = 'Error happened, while adding seller! Try again!';
         } finally {

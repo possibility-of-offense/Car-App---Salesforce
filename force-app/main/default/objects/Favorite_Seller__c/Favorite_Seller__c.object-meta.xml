@@ -152,15 +152,15 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>Seller__custom</label>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Favorite Seller</label>
     <nameField>
-        <label>Seller Name</label>
+        <label>Favorite Seller Name</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Sellers</pluralLabel>
+    <pluralLabel>Favorite Sellers</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

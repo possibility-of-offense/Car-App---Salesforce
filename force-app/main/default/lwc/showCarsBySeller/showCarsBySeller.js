@@ -79,11 +79,18 @@ export default class ShowCarsBySeller extends LightningElement {
         this.cars = null;
 
         registerListener('loadedSellers', this.handleLoadingCars, this);
-        // registerListener('editedModel', this.handleEditedModel, this);
+        registerListener('addedSeller', this.handleLoadingCars, this);
+        registerListener('endDeletingSeller', this.handleHideCars, this);
+        registerListener('editedModel', this.handleEditedModel, this);
     }
     
     disconnectedCallback() {
         unregisterAllListeners(this);
+    }
+
+    // Hide cars
+    handleHideCars() {
+        this.sellersAdded = false;
     }
 
     // Show cars
@@ -96,6 +103,8 @@ export default class ShowCarsBySeller extends LightningElement {
 
         this.ajaxLoading = true;
         this.sellerId = id;
+        this.sellersAdded = true;
+
         if(name) {
             this.sellerName = name;
         }
