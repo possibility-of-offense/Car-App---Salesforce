@@ -19,7 +19,7 @@ public with sharing class SellersUtils {
     // Show all sellers
     @AuraEnabled
     public static List<Seller__c> getSellers() {
-        return [SELECT Name FROM Seller__c WITH SECURITY_ENFORCED ORDER BY CreatedDate];
+        return [SELECT Name, Number_of_cars__c FROM Seller__c WITH SECURITY_ENFORCED ORDER BY CreatedDate];
     }
 
     // Add seller

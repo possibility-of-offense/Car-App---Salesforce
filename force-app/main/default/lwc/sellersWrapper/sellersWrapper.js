@@ -39,7 +39,14 @@ export default class ModelWrapper extends LightningElement {
         }
     }
     get ifSellers() {
-        if(this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0) return true;
+        if(this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0) {
+            const findSellerWithCars = this.sellers.find(sel => sel.Number_of_cars__c);
+            if(findSellerWithCars) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         return false;
     }
 
@@ -55,6 +62,7 @@ export default class ModelWrapper extends LightningElement {
             this.handleShowSellers,
             this
         );
+
     }
 
     // Disconnected callback
@@ -94,17 +102,17 @@ export default class ModelWrapper extends LightningElement {
             );
         }
         this.sellers = null;
-
+        
         ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError, data: this.sellers } =
              await AjaxCalling.call(
                 showSellers, 
                 'Error while getting the sellers! Try again!'
-            ));
+        ));
 
         fireEvent(this.pageRef, 'loadedSellers', {
             id: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Id : null,
             name: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Name : null
-        });
+        }); 
     }
 
     // Handle event when seller is added

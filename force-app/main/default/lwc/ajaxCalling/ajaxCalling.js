@@ -36,6 +36,7 @@ export default class AjaxCalling extends LightningElement {
 
             this.data = response;
         } catch(error) {
+            console.log(error.message);
             this.ajaxError = errorMessage || error.message;
         } finally {
             this.ajaxLoading = false;

@@ -79,7 +79,7 @@ export default class ShowCarsBySeller extends LightningElement {
         this.cars = null;
 
         registerListener('loadedSellers', this.handleLoadingCars, this);
-        registerListener('editedModel', this.handleEditedModel, this);
+        // registerListener('editedModel', this.handleEditedModel, this);
     }
     
     disconnectedCallback() {
@@ -106,10 +106,9 @@ export default class ShowCarsBySeller extends LightningElement {
                     onSale: false,
                     sellerId: id
                 }),
-               `Error while getting the cars! Try reloading the browser!`
+                `Error while getting the cars! Try reloading the browser!`
         ));
-
-        if(!this.ajaxError) {
+        if(!this.ajaxError && Array.isArray(this.cars)) {
             this.setMinAndMaxValues(this.cars);
             this.numberOfCars = this.cars.length;
         }
