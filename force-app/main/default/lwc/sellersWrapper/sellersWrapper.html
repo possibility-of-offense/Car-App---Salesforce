@@ -30,15 +30,17 @@
                 </div>
             </lightning-tab>
 
-            <!-- Set sale price -->
-            <lightning-tab label="Add sale price">
-                <c-set-sale-price-for-car></c-set-sale-price-for-car>
-            </lightning-tab>
+           <template lwc:if={ifSellers}>
+                <!-- Set sale price -->
+                <lightning-tab label="Add sale price">
+                    <c-set-sale-price-for-car></c-set-sale-price-for-car>
+                </lightning-tab>
 
-            <!-- Show cars on sale -->
-            <lightning-tab label="See cars on sale" onactive={handleNotifyComponent}>
-                <c-show-cars-on-sale notifications={notifications} remove-notification={removeNotification}></c-show-cars-on-sale>
-            </lightning-tab>
+                <!-- Show cars on sale -->
+                <lightning-tab label="See cars on sale" onactive={handleNotifyComponent}>
+                    <c-show-cars-on-sale notifications={notifications} remove-notification={removeNotification}></c-show-cars-on-sale>
+                </lightning-tab>
+           </template>
         </lightning-tabset>
     </lightning-card>
 </template>

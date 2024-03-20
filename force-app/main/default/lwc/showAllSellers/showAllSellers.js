@@ -13,7 +13,7 @@ export default class ShowAllSellers extends LightningElement {
     // Getters
     //
     get sellersExist() {
-        if(this.sellers.length > 0) return true;
+        if(this.sellers && this.sellers.length > 0) return true;
         return false;
     }
 

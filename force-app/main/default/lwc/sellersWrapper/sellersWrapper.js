@@ -38,6 +38,10 @@ export default class ModelWrapper extends LightningElement {
             location: '[44, 44]'
         }
     }
+    get ifSellers() {
+        if(this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0) return true;
+        return false;
+    }
 
     // Connected callback
     connectedCallback() {
@@ -97,11 +101,12 @@ export default class ModelWrapper extends LightningElement {
                 'Error while getting the sellers! Try again!'
             ));
 
-
-        fireEvent(this.pageRef, 'loadedSellers', {
-            id: this.sellers[0].Id,
-            name: this.sellers[0].Name
-        });
+        if(this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0) {
+            fireEvent(this.pageRef, 'loadedSellers', {
+                id: this.sellers[0].Id,
+                name: this.sellers[0].Name
+            });
+        }
     }
 
     // Handle event when seller is added
