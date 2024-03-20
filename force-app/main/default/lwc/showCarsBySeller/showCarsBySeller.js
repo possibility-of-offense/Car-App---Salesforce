@@ -25,12 +25,18 @@ export default class ShowCarsBySeller extends LightningElement {
     minPriceSliderRange = 0;
     maxPriceSliderRange = 0;
 
+    sellersAdded = true;
+
     //
     // Getters
     //
 
     get title() {
-        return 'Cars by ' + this.sellerName
+        if(this.sellersAdded) {
+            return 'Cars by ' + this.sellerName
+        } else {
+            return 'Cars to be shown!';
+        }
     }
     get deleteAllCarsBy() {
         return 'Delete all cars of ' + this.sellerName
@@ -82,6 +88,12 @@ export default class ShowCarsBySeller extends LightningElement {
 
     // Show cars
     async handleLoadingCars({id, name}) {
+        if(!id && !name) {
+            this.sellersAdded = false;
+            this.ajaxLoading = false;
+            return;
+        }
+
         this.ajaxLoading = true;
         this.sellerId = id;
         if(name) {

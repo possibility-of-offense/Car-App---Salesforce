@@ -14,6 +14,14 @@ export default class ShowModels extends LightningElement {
     ajaxLoading = false;
     ajaxError = null;
 
+    //
+    // Getters
+    //
+    get showIfThereAreModels() {
+        if(this.models && this.models.length > 0) return true;
+        return false;
+    } 
+
     @wire(CurrentPageReference) pageRef;
 
     connectedCallback() {

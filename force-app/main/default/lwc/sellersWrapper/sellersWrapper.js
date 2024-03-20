@@ -101,12 +101,10 @@ export default class ModelWrapper extends LightningElement {
                 'Error while getting the sellers! Try again!'
             ));
 
-        if(this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0) {
-            fireEvent(this.pageRef, 'loadedSellers', {
-                id: this.sellers[0].Id,
-                name: this.sellers[0].Name
-            });
-        }
+        fireEvent(this.pageRef, 'loadedSellers', {
+            id: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Id : null,
+            name: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Name : null
+        });
     }
 
     // Handle event when seller is added

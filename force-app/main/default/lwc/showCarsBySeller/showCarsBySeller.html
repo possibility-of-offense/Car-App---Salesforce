@@ -15,7 +15,7 @@
         <!-- Buttons -->
         <div class="buttons">
             <ul>
-                <li class="button-item">
+                <li lwc:if={sellersAdded} class="button-item">
                     <lightning-button class="add-car" label="Add car" onclick={handleAddCarClick}></lightning-button>
                 </li>
                 <li lwc:if={showDeleteButtonIfThereAreCars} class="button-item">
@@ -37,6 +37,9 @@
                 </lightning-layout-item>
             </template>
         </lightning-layout>
-        <h2 class="slds-p-left_medium" lwc:if={showMessageWhenAjaxIsFinished}>{showMessageWhenAjaxIsFinished}</h2>
+        <template lwc:if={sellersAdded}>
+            <h2 class="slds-p-left_medium" lwc:if={showMessageWhenAjaxIsFinished}>{showMessageWhenAjaxIsFinished}</h2>
+        </template>
+        <div lwc:else class="slds-p-left_medium">Add a seller first!</div>
     </lightning-card>
 </template>

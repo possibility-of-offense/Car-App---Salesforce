@@ -13,7 +13,7 @@
         <c-spinner show-spinner={ajaxLoading} spinner-size="medium"></c-spinner>
 
         <!-- Models -->
-        <ul class="slds-var-p-around_x-small" lwc:if={models}>
+        <ul class="slds-var-p-around_x-small" lwc:if={showIfThereAreModels}>
             <template for:each={models} for:item="model">
                 <li key={model.Id} data-id={model.Id} class="flex f-align-items-center slds-var-p-around_x-small">
                     <lightning-icon icon-name="custom:custom31" alternative-text="Event" title="Event"></lightning-icon>
@@ -45,5 +45,6 @@
                 </li>
             </template>
         </ul>
+        <h3 lwc:else class="slds-p-left_medium">No models added!</h3>
     </lightning-card>
 </template>
