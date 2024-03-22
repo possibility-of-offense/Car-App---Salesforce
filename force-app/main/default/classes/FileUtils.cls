@@ -24,7 +24,7 @@ public with sharing class FileUtils {
             contentLink.ShareType = 'V';
             insert contentLink;
 
-            Car__c car = [SELECT Picture__c FROM Car__c WHERE Id =:recordId];
+            Car__c car = [SELECT Picture__c, Seller_custom__c FROM Car__c WHERE Id =:recordId];
             car.Picture__c = '/sfc/servlet.shepherd/version/download/' + content.Id;
             update car;
 

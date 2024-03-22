@@ -242,6 +242,8 @@ export default class ShowCarsBySeller extends LightningElement {
     // Handle deleted car 
     async handleDeletedCar(e) {
         this.cars = this.cars.filter(el => el.Id !== e.detail.id);
+        fireEvent(this.pageRef, 'modifiedCars');
+        
         if(this.cars.length === 0) {
             await this.handleLoadingCars({
                 id: this.sellerId

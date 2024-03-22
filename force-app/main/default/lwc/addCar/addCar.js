@@ -69,15 +69,17 @@ export default class AddCar extends LightningModal {
         this.ajaxLoading = true;
         const recordId = e.detail.id;
         
-        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
-            await AjaxCalling.call(
-                createFile.bind(null, {
-                    base64: this.toBase64,
-                    filename: this.filename,
-                    recordId
-                }),
-               `Error adding new car! Try again!`
-        ));
+        if(this.toBase64) {
+            ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
+                await AjaxCalling.call(
+                    createFile.bind(null, {
+                        base64: this.toBase64,
+                        filename: this.filename,
+                        recordId
+                    }),
+                   `Error adding new car! Try again!`
+            ));
+        }
 
         if(!this.ajaxError) this.close(true);
     }
