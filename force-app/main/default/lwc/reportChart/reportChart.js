@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { loadScript } from "lightning/platformResourceLoader";
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
@@ -7,7 +7,7 @@ import chartjs from "@salesforce/resourceUrl/Chart";
 import getSellersWithCars from "@salesforce/apex/SellersUtils.getSellersWithCars";
 
 export default class ReportChart extends LightningElement {
-    sellers = [];
+    @api sellers = [];
     error = null;
     chart;
 
@@ -26,12 +26,10 @@ export default class ReportChart extends LightningElement {
 
         return Promise.all([
             loadScript(this, chartjs),
-            getSellersWithCars()
+            // getSellersWithCars()
         ]).then((res) => {
             let ctx = this.template.querySelector('canvas.chart');
-            const sellers = res[1];
-            this.sellers = sellers;
-            const labels = sellers.map(el => el.Name);
+            const labels = this.sellers.map(el => el.Name);
             
             this.chart = new window.Chart(ctx, {
                 type: 'bar',
@@ -39,7 +37,7 @@ export default class ReportChart extends LightningElement {
                     labels,
                     datasets: [{
                         label: 'Sold cars by sellers',
-                        data: sellers.map(el => el.Sold_Cars__c),
+                        data: this.sellers.map(el => el.Sold_Cars__c),
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',

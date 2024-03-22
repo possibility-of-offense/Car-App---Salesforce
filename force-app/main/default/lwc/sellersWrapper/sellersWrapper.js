@@ -90,6 +90,19 @@ export default class ModelWrapper extends LightningElement {
     
     // Handle fetch sellers
     async handleShowSellers(e) {
+        // this.sellers = null;
+        
+        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError, data: this.sellers } =
+            await AjaxCalling.call(
+               showSellers, 
+               'Error while getting the sellers! Try again!'
+       ));
+
+       fireEvent(this.pageRef, 'loadedSellers', {
+           id: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Id : null,
+           name: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Name : null
+       }); 
+
         if(e && e.hasOwnProperty('detail')) {
             fireEvent(
                 this.pageRef,
@@ -105,18 +118,6 @@ export default class ModelWrapper extends LightningElement {
                 })
             );
         }
-        this.sellers = null;
-        
-        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError, data: this.sellers } =
-             await AjaxCalling.call(
-                showSellers, 
-                'Error while getting the sellers! Try again!'
-        ));
-
-        fireEvent(this.pageRef, 'loadedSellers', {
-            id: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Id : null,
-            name: this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0 ? this.sellers[0].Name : null
-        }); 
     }
 
     // Handle event when seller is added

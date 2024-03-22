@@ -10,9 +10,12 @@ import Availability from '@salesforce/schema/Car__c.Car_Availability__c';
 
 import createFile from '@salesforce/apex/FileUtils.createFile';
 import AjaxCalling from 'c/ajaxCalling';
+import { api } from 'lwc';
 
 export default class AddCar extends LightningModal {
     objectApiName = 'Car__c';
+
+    @api sellerId;
 
     // Filename and basename
     filename;

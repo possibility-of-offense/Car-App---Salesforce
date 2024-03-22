@@ -36,7 +36,10 @@
                         {car.Name}
                     </a>
                 </h3>
-                <p><span><strong>Price:</strong> {car.Model_price__c}</span><span lwc:if={isThereSalePrice}>&nbsp; <strong>Sale:</strong> {car.Sale_price__c}</span></p>
+                <p>
+                    <span><strong>Regular price:</strong> {car.Model_price__c}</span>
+                    <span lwc:if={isThereSalePrice}>&nbsp; <strong>Sale price:</strong> {car.Sale_price__c}</span>
+                </p>
                 <p><strong>Color:</strong> {car.Color__c} </p>
                 <p>{car.Number_of_doors__c} Doors</p>
             </div>

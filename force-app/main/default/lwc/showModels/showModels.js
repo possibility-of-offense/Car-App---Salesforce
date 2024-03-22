@@ -2,12 +2,12 @@ import { LightningElement, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
-import { deleteRecord } from 'lightning/uiRecordApi';
 
 import showModels from '@salesforce/apex/ModelsUtils.showModels';
 import addModel from 'c/addModel';
 import editModel from 'c/editModel';
 import AjaxCalling from 'c/ajaxCalling';
+import deleteModel from '@salesforce/apex/ModelsUtils.deleteModel';
 
 export default class ShowModels extends LightningElement {
     models = [];
@@ -59,10 +59,12 @@ export default class ShowModels extends LightningElement {
         const id = e.target.closest('li').dataset.id;
         this.ajaxLoading = true;
 
-        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
+        let result;
+
+        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError, data: result } =
             await AjaxCalling.call(
-                deleteRecord.bind(null, id),
-               `Couldn't delete the model! Try again!`
+                deleteModel.bind(null, { id }),
+                `Couldn't delete the model! Try again!`
         ));
 
         if(!this.ajaxError) {
@@ -78,6 +80,14 @@ export default class ShowModels extends LightningElement {
             fireEvent(this.pageRef, 'fetchedModels', {
                 models: this.models
             })
+        } else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: this.ajaxError,
+                    variant: 'error',
+                })
+            );
         }
     }
 

@@ -100,6 +100,7 @@ export default class SingleCar extends LightningElement {
     async handleBuyCar() {
         this.ajaxLoading = true;
 
+       try {
         ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
             await AjaxCalling.call(
                 buyCar.bind(null, {
@@ -108,10 +109,15 @@ export default class SingleCar extends LightningElement {
                 }),
                `Error while buying the car! Try reloading the browser!`
         ));
+       } catch(err) {
+        console.log(err.message);
+       }
 
         if(!this.ajaxError) {
             this._carAvailability--;
         }
+
+        console.log(this.ajaxError);
 
         this.dispatchEvent(
             new ShowToastEvent({

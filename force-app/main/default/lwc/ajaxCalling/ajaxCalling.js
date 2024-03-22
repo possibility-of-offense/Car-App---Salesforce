@@ -22,6 +22,11 @@ export default class AjaxCalling extends LightningElement {
 
         try {
             const response = await methodToCall();
+            
+            if(typeof(response) === 'string' && response.slice(0, 6) === 'ERROR:') {
+                errorMessage = null;
+                throw new Error(response.slice(6));
+            }
 
             // If events is not an empty object
             if(events && Object.keys(events).length > 0) {
@@ -36,7 +41,6 @@ export default class AjaxCalling extends LightningElement {
 
             this.data = response;
         } catch(error) {
-            console.log(error.message);
             this.ajaxError = errorMessage || error.message;
         } finally {
             this.ajaxLoading = false;

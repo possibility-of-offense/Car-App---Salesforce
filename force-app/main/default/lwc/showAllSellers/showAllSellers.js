@@ -33,6 +33,13 @@ export default class ShowAllSellers extends LightningElement {
 
     connectedCallback() {
         registerListener(
+            'startDeletingSeller',
+            function() {
+                this.ajaxLoading = true;
+            },
+            this
+        );
+        registerListener(
             'userWasDeleted',
             this.handleResetDeletionStarted(),
             this

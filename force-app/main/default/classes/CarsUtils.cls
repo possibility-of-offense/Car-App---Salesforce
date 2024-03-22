@@ -132,7 +132,7 @@ public with sharing class CarsUtils {
     @AuraEnabled
     public static List<Car__c> getCarById(String id) {
         try {
-            return [SELECT Id, Name, Sale_price__c FROM Car__c WHERE Id =:id];
+            return [SELECT Id, Name, Model_price__c, Sale_price__c FROM Car__c WHERE Id =:id];
         } catch(Exception e) {
             return null;
         }
@@ -187,6 +187,7 @@ public with sharing class CarsUtils {
 
             return false;
         } catch(Exception e) {
+            System.debug(e.getMessage());
             return false;
         }
     }

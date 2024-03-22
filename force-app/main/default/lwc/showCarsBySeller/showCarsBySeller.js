@@ -85,13 +85,24 @@ export default class ShowCarsBySeller extends LightningElement {
 
         registerListener('loadedSellers', this.handleLoadingCars, this);
         registerListener('addedSeller', this.handleLoadingCars, this);
+        registerListener('addedSalePrice', this.handleRefetchCarsIfSalePriceWasAdded, this);
+
         registerListener('endDeletingSeller', this.handleHideCars, this);
+
         registerListener('editedModel', this.handleEditedModel, this);
         registerListener('fetchedModels', this.handleFetchedModels, this);
+
     }
     
     disconnectedCallback() {
         unregisterAllListeners(this);
+    }
+
+    // Refetch cars if sale price was added
+    handleRefetchCarsIfSalePriceWasAdded({ carId }) {
+        if(this.cars.find(el => el.Id === carId)) {
+            this.handleLoadingCars({id: this.sellerId, name: this.sellerName});
+        }
     }
 
     // Hide cars
@@ -200,12 +211,11 @@ export default class ShowCarsBySeller extends LightningElement {
     // Show add car modal
     async handleAddCarClick() {
         const result = await addCar.open({
-            size: 'small'
+            size: 'small',
+            sellerId: this.sellerId
         });
 
         if(result === true) {
-            fireEvent(this.pageRef, 'modifiedCars');
-
             try {
                 const cars = await refetchCarsBySeller({
                     sellerId: this.sellerId

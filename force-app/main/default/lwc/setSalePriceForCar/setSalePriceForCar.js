@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
-import { registerListener, unregisterAllListeners } from 'c/pubsub';
+import { fireEvent, registerListener, unregisterAllListeners } from 'c/pubsub';
 import { getRecord } from "lightning/uiRecordApi";
 
 import addSalePrice from '@salesforce/apex/CarsUtils.addSalePrice';
@@ -15,6 +15,7 @@ export default class SetSalePriceForCar extends LightningElement {
     cars = [];
     value = '';
     pickedValue = false;
+    modelPrice = 0;
 
     @api objectApiName = 'Car__c';
     @wire(getRecord, {recordId: '$value', fields: FIELDS}) car;
@@ -39,7 +40,16 @@ export default class SetSalePriceForCar extends LightningElement {
     // Connected callback
     connectedCallback() {
         registerListener('modifiedCars', this.handleRepopulateSelect, this);
+        
+        this.handleFetchCars();
+    }
 
+    // Disconnected callback
+    disconnectedCallback() {
+        unregisterAllListeners(this);
+    }
+
+    handleFetchCars() {
         this.ajaxLoading = true;
         this.ajaxError = null;
         getAllCars({
@@ -50,7 +60,8 @@ export default class SetSalePriceForCar extends LightningElement {
                 this.cars = [
                     {
                         label: 'Choose a car',
-                        value: ''
+                        value: '',
+                        disabled: true
                     },
                     ...res.map(el => ({
                         label: el.Name,
@@ -64,11 +75,6 @@ export default class SetSalePriceForCar extends LightningElement {
             .finally(() => {
                 this.ajaxLoading = false;
             })
-    }
-
-    // Disconnected callback
-    disconnectedCallback() {
-        unregisterAllListeners(this);
     }
 
     // Handle pick a value from the select list
@@ -92,6 +98,7 @@ export default class SetSalePriceForCar extends LightningElement {
 
         const theCar = result[0];
         this.price = theCar.Sale_price__c || 0;
+        this.modelPrice = theCar.Model_price__c;
     }
 
     // Update sale price value
@@ -127,6 +134,7 @@ export default class SetSalePriceForCar extends LightningElement {
                     variant: 'error',
                 })
             );
+            this.price = 0;
             return;
         }
 
@@ -138,33 +146,44 @@ export default class SetSalePriceForCar extends LightningElement {
                     variant: 'success',
                 })
             );
+            fireEvent(
+                this.pageRef,
+                'addedSalePrice',
+                {
+                    carId: this.value
+                }
+            )
         }
     }
 
     // TODO
     handleRepopulateSelect({ids = null}) {
-        // getAllCars()
-        //     .then(res => {
-        //         if(ids && Array.isArray(ids)) {
-        //             let findCar = ids.find(el => el === this.value);
-        //             if(findCar) {
-        //                 this.price = 0;
-        //             }
-        //         }
-
-        //         this.cars = [
-        //             {
-        //                 label: 'Choose a car',
-        //                 value: ''
-        //             },
-        //             ...res.map(el => ({
-        //                 label: el.Name,
-        //                 value: el.Id
-        //             }))
-        //         ];
-        //     })
-        //     .catch(err => {
-        //         console.log(err.message, 'repopulate');
-        //     })
-    }
+        if(ids) {
+            getAllCars()
+                .then(res => {
+                    if(ids && Array.isArray(ids)) {
+                        let findCar = ids.find(el => el === this.value);
+                        if(findCar) {
+                            this.price = 0;
+                        }
+                    }
+    
+                    this.cars = [
+                        {
+                            label: 'Choose a car',
+                            value: ''
+                        },
+                        ...res.map(el => ({
+                            label: el.Name,
+                            value: el.Id
+                        }))
+                    ];
+                })
+                .catch(err => {
+                    console.log(err.message, 'repopulate');
+                })
+        } else {
+            this.handleFetchCars();
+        }
+    } 
 }

@@ -28,4 +28,31 @@ public with sharing class ModelsUtils {
             return 'ERROR-OCCURED';
         }
     }
+
+    // Delete a model (or try to delete)
+    @AuraEnabled
+    public static String deleteModel(String id) {
+        try {
+            List<Model__c> model = [SELECT Id FROM Model__c WHERE Id = :id];
+            if(model.size() > 0) {
+                Model__c theModel = model[0];
+                delete theModel;
+                
+                return 'MODEL-DELETED';
+            }
+
+            return 'MODEL-NOT-FOUND';
+        } catch(Exception e) {
+            String msg = 'Error occurred!';
+            String systemMsg = e.getMessage();
+
+            System.debug(systemMsg);
+
+            if(systemMsg.contains('DELETE_FAILED, Your attempt to delete') && systemMsg.contains('could not be completed because it is associated with the following cars')) {
+                msg = 'ERROR: The model is being used by a seller!';
+            }
+
+            return msg;
+        }
+    }
 }
