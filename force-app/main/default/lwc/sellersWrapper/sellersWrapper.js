@@ -39,7 +39,6 @@ export default class ModelWrapper extends LightningElement {
         }
     }
     get ifSellers() {
-        console.log(this.sellers, 'sellersWrapper');
         if(this.sellers && Array.isArray(this.sellers) && this.sellers.length > 0) {
             const findSellerWithCars = this.sellers.find(sel => sel.Number_of_cars__c);
             if(findSellerWithCars) {

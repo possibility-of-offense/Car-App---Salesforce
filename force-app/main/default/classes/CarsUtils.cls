@@ -29,7 +29,7 @@ public with sharing class CarsUtils {
 
     // Add sale price to car
     @AuraEnabled
-    public static void addSalePrice(String carId, Integer price) {
+    public static String addSalePrice(String carId, Integer price) {
         try {
             List<Car__c> car = [SELECT Sale_price__c FROM Car__c WHERE Id = :carId WITH SECURITY_ENFORCED];
             if(car.size() > 0) {
@@ -37,9 +37,17 @@ public with sharing class CarsUtils {
                 theCar.Sale_price__c = price;
                 update theCar;
             }
+            return 'Success';
             
         } catch(Exception e) {
             System.debug(e.getMessage() + ' addSalePrice');
+            String errorMsg = e.getMessage();
+
+            if(errorMsg.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')){
+                errorMsg = errorMsg.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+            }
+
+            return errorMsg;
         }
     }
 

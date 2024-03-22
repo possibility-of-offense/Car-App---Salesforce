@@ -107,8 +107,9 @@ export default class SetSalePriceForCar extends LightningElement {
     async handleChangeSalePrice(e) {
         this.ajaxLoading = true;
         this.ajaxError = null;
+        let result;
 
-        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError } =
+        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError, data: result } =
             await AjaxCalling.call(
                 addSalePrice.bind(null, {
                     carId: this.value,
@@ -116,6 +117,18 @@ export default class SetSalePriceForCar extends LightningElement {
                 }), 
                `Coudln't add/update sale price! Try again or reload the browser!`
         ));
+
+
+        if(result !== 'Success') {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: result,
+                    variant: 'error',
+                })
+            );
+            return;
+        }
 
         if(!this.ajaxError) {
             this.dispatchEvent(
