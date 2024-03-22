@@ -5,6 +5,7 @@ import getSellersWithCars from '@salesforce/apex/SellersUtils.getSellersWithCars
 
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
+import setToArchive from '@salesforce/apex/ArchiveUtils.setToArchive';
 
 const columns = [
     { label: 'Name', fieldName: 'name' },
@@ -123,6 +124,29 @@ export default class ListBoughtCars extends LightningElement {
             })
             .catch(err => {
                 this.ajaxError = 'Error while refreshing the data! Try reloading the browser!';
+            })
+            .finally(() => {
+                this.ajaxLoading = false;
+            })
+    }
+
+    // Set to archive
+    handleArchive() {
+        this.ajaxLoading = true;
+        this.ajaxError = null;
+
+        // name: res.Name,
+        // price: res.Sold_Car_Price__c,
+        // seller: res.Seller__r.Name
+
+        setToArchive()
+            .then(res => {
+                console.log(res);
+                this.cars = [];
+            })
+            .catch(err => {
+                console.log(err);
+                this.ajaxError = `Couldn't send to archives! Try again!`
             })
             .finally(() => {
                 this.ajaxLoading = false;

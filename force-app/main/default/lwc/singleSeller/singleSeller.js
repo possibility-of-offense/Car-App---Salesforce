@@ -4,18 +4,34 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
 import { deleteRecord } from 'lightning/uiRecordApi';
 
+import addToFavorites from '@salesforce/apex/FavoriteSellerUtils.addToFavorites';
+import AjaxCalling from 'c/ajaxCalling';
+
 export default class SingleSeller extends LightningElement {
     @api seller = null;
     @wire(CurrentPageReference) pageRef;
+    ajaxLoading = false;
+    ajaxError = null;
+
+    _optimisticLikeState = null;
 
     // 
     // Getters
     //
+
     get showVariantBaseOnFavorite() {
-        if(this.seller.Favorite__c) {
-            return 'success';
-        } else {
+        console.log(JSON.stringify(this.seller));
+        if(this.seller.Favorite__c || this._optimisticLikeState) {
+            return 'brand';
+        } else if(!this.seller.Favorite__c || this._optimisticLikeState === null) {
             return 'brand-outline';
+        }
+    }
+    get showText() {
+        if(this.seller.Favorite__c || this._optimisticLikeState) {
+            return 'Remove seller from favorites';
+        } else if(!this.seller.Favorite__c && this._optimisticLikeState === null) {
+            return 'Add seller to favorites';
         }
     }
 
@@ -60,5 +76,28 @@ export default class SingleSeller extends LightningElement {
             id: this.seller.Id,
             name: this.seller.Name
         });
+    }
+
+    // Click on add to favorite button
+    async handleClickFavoriteButton() {
+        let response;
+
+        if(this.seller.Favorite__c || this._optimisticLikeState === true) {
+            this._optimisticLikeState = false;
+        } else if(!this.seller.Favorite__c || this._optimisticLikeState === false) {
+            this._optimisticLikeState = true;
+        }
+
+        ({ ajaxLoading: this.ajaxLoading, ajaxError: this.ajaxError, data: response } =
+            await AjaxCalling.call(
+                addToFavorites.bind(null, {
+                    sellerId: this.seller.Id
+                }),
+               `Error while getting models! Try reloading the browser!`
+        ));
+
+        if(this.ajaxError) {
+            this._optimisticLikeState = false;
+        }
     }
 }

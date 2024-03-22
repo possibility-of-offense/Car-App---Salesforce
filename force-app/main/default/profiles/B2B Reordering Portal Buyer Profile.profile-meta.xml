@@ -18,6 +18,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FavoriteSellerUtils</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FileUtils</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -175,6 +179,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
+        <layout>Archive_Sale__c-Archive Sale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Car__c-Car Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -192,6 +199,10 @@
     <layoutAssignments>
         <layout>Sold_Car__c-Sold Car Layout</layout>
     </layoutAssignments>
+    <tabVisibilities>
+        <tab>Archive_Sale__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>Car__c</tab>
         <visibility>Hidden</visibility>

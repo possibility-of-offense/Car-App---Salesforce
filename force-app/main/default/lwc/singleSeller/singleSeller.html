@@ -4,12 +4,14 @@
         &nbsp;&nbsp;
         <a href="#" onclick={handleChangeSeller}>{seller.Name}</a>
 
+        <c-spinner show-spinner={ajaxLoading}></c-spinner>
+
         <div class="icons">
             <lightning-button-icon
-                alternative-text="Add seller to favorites"
+                alternative-text={showText}
                 variant={showVariantBaseOnFavorite}
-                title="Add seller to favorites" 
-                onclick={handleClickDeleteIcon} 
+                title={showText} 
+                onclick={handleClickFavoriteButton} 
                 class="add-to-favorites-icon"
                 icon-name="utility:heart"
             >
