@@ -2,4 +2,13 @@
     display: flex;
     justify-content: flex-end;
     margin: 10px;
+    position: absolute;
+    top: 0px;
+    right: 3px;
+}
+
+.icons {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
 }

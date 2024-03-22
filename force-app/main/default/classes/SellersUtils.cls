@@ -19,7 +19,12 @@ public with sharing class SellersUtils {
     // Show all sellers
     @AuraEnabled
     public static List<Seller__c> getSellers() {
-        return [SELECT Name, Number_of_cars__c FROM Seller__c WITH SECURITY_ENFORCED ORDER BY CreatedDate];
+        try {
+            return [SELECT Name, Number_of_cars__c, Favorite__c FROM Seller__c WITH SECURITY_ENFORCED ORDER BY CreatedDate];
+        } catch(Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
     }
 
     // Add seller

@@ -3,7 +3,7 @@ import { LightningElement, wire } from 'lwc';
 import showBoughtCars from '@salesforce/apex/CarsUtils.showBoughtCars';
 import getSellersWithCars from '@salesforce/apex/SellersUtils.getSellersWithCars';
 
-import { CurrentPageNavigation } from 'lightning/navigation';
+import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
 
 const columns = [
@@ -23,7 +23,7 @@ export default class ListBoughtCars extends LightningElement {
 
     toShowReportChart = true;
 
-    @wire(CurrentPageNavigation) pageRef;
+    @wire(CurrentPageReference) pageRef;
 
     get buttonLabel() {
         if(this.toShowReportChart) return 'Show report chart';
@@ -38,10 +38,10 @@ export default class ListBoughtCars extends LightningElement {
         this.ajaxLoading = true;
         this.ajaxError = null;
 
-        // registerListener('endDeletingSeller', this.handleRedraw, this);
+        registerListener('endDeletingSeller', this.handleRedraw, this);
 
         Promise.all([
-            this.handleShowBoughCars(),
+            this.handleShowBoughtCars(),
             this.handleGetSellersWithcars()
         ])
             .then(([carsData, sellersData]) => {
@@ -71,7 +71,7 @@ export default class ListBoughtCars extends LightningElement {
     }
 
     // Show bought cars
-    async handleShowBoughCars() {
+    async handleShowBoughtCars() {
         return showBoughtCars()
     }
 
@@ -85,8 +85,10 @@ export default class ListBoughtCars extends LightningElement {
         this.ajaxError = null;
         this.ajaxLoading = true;
 
-        handleGetSellersWithcars()
-            .then(res => this.sellers = res)
+        getSellersWithCars()
+            .then(res => {
+                this.sellers = res;
+            })
             .catch(err => {
                 this.ajaxError = 'Error while fetch the updated sellers data! Try reloading the browser!';
             })
@@ -102,10 +104,13 @@ export default class ListBoughtCars extends LightningElement {
 
     // Handle refresh bought cars
     handleRefresh() {
-        handleShowBoughCars()
-            .then(res => {
+        this.ajaxError = null;
+        this.ajaxLoading = true;
+        
+        showBoughtCars()
+            .then(data => {
                 let items = [];
-                for(let res of carsData) {
+                for(let res of data) {
                     items.push({
                         id: res.Id,
                         name: res.Name,

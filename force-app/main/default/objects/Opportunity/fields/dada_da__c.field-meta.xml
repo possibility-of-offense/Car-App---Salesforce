@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dada_da__c</fullName>
+    <externalId>false</externalId>
+    <formula>10 &gt; 5</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>dada da</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

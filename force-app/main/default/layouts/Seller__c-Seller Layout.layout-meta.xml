@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>Sold_Cars__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Favorite__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -89,6 +93,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Sold_Car__c.Seller__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Favorite_Seller__c.Seller_custom__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

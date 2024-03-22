@@ -8,6 +8,17 @@ export default class SingleSeller extends LightningElement {
     @api seller = null;
     @wire(CurrentPageReference) pageRef;
 
+    // 
+    // Getters
+    //
+    get showVariantBaseOnFavorite() {
+        if(this.seller.Favorite__c) {
+            return 'success';
+        } else {
+            return 'brand-outline';
+        }
+    }
+
     // Handle delete seller
     async handleClickDeleteIcon() {
         try {

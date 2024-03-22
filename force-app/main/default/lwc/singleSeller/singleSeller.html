@@ -7,11 +7,11 @@
         <div class="icons">
             <lightning-button-icon
                 alternative-text="Add seller to favorites"
-                variant="brand-outline" 
+                variant={showVariantBaseOnFavorite}
                 title="Add seller to favorites" 
                 onclick={handleClickDeleteIcon} 
                 class="add-to-favorites-icon"
-                icon-name="utility:add"
+                icon-name="utility:heart"
             >
                 <label>Delete seller</label>
             </lightning-button-icon>

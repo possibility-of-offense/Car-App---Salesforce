@@ -7,17 +7,32 @@
         </template>
         <br />
 
-        <c-spinner show-spinner={ajaxLoading}></c-spinner>
+        <template lwc:if={ajaxLoading}>
+            <c-spinner show-spinner={ajaxLoading}></c-spinner>
+        </template>
 
         <div lwc:if={toShowReportChart} style="height: 300px;">
-            <lightning-button-icon
-                alternative-text="Refresh"
-                variant="brand-outline"
-                title="Refresh"
-                onclick={handleRefresh}
-                class="edit-icon"
-                icon-name="utility:refresh"
-            ><label>Edit model</label></lightning-button-icon>
+           <div class="icons">
+                <lightning-button-icon
+                    alternative-text="Refresh"
+                    variant="brand-outline"
+                    title="Refresh"
+                    onclick={handleRefresh}
+                    class="edit-icon"
+                    icon-name="utility:refresh"
+                ><label>Refresh</label></lightning-button-icon>
+                &nbsp;
+                <lightning-button-icon
+                    alternative-text="Archive"
+                    variant="brand-outline"
+                    title="Archive"
+                    onclick={handleArchive}
+                    class="edit-icon"
+                    icon-name="utility:archive"
+                ><label>Archive</label></lightning-button-icon>
+                <br />
+                <br />
+           </div>
             <lightning-datatable
                 key-field="name"
                 data={cars}
