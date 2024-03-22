@@ -47,7 +47,7 @@ export default class ShowCarsBySeller extends LightningElement {
         return 'Delete all cars of ' + this.sellerName
     }
     get showDeleteButtonIfThereAreCars() {
-        if(this.numberOfCars > 0) return true;
+        if(this.numberOfCars > 4) return true;
         return false;
     }
     get showSliderIfMoreThanOneCar() {
@@ -173,6 +173,7 @@ export default class ShowCarsBySeller extends LightningElement {
             this.maxPriceSliderRange = 0;
             this.minPriceSliderRange = 0;
             this.cars = null;
+            this.numberOfCars = 0;
         } else {
             const evt = new ShowToastEvent({
                 title: 'Error',
@@ -209,7 +210,9 @@ export default class ShowCarsBySeller extends LightningElement {
                 const cars = await refetchCarsBySeller({
                     sellerId: this.sellerId
                 });
+            
                 this.cars = cars;
+                this.numberOfCars = this.cars.length;
                 this.setMinAndMaxValues(this.cars);
             } catch (error) {
                 this.ajaxError = 'Error occured! Try reloading the browser!';

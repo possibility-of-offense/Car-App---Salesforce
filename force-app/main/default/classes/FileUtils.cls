@@ -31,6 +31,7 @@ public with sharing class FileUtils {
             return content.Id;
 
         } catch(Exception e) {
+            System.debug(e.getMessage());
             return e.getMessage();
         }
     }
