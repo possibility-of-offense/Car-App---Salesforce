@@ -15,7 +15,7 @@
         <!-- Buttons -->
         <div class="buttons">
             <ul>
-                <li lwc:if={sellersAdded} class="button-item">
+                <li lwc:if={areThereSellerAndModels} class="button-item">
                     <lightning-button class="add-car" label="Add car" onclick={handleAddCarClick}></lightning-button>
                 </li>
                 <li lwc:if={showDeleteButtonIfThereAreCars} class="button-item">

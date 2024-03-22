@@ -26,11 +26,16 @@ export default class ShowCarsBySeller extends LightningElement {
     maxPriceSliderRange = 0;
 
     sellersAdded = true;
+    areThereModels = false;
 
     //
     // Getters
     //
 
+    get areThereSellerAndModels() {
+        if(this.sellersAdded && this.areThereModels) return true;
+        return false;
+    }
     get title() {
         if(this.sellersAdded) {
             return 'Cars by ' + this.sellerName
@@ -82,6 +87,7 @@ export default class ShowCarsBySeller extends LightningElement {
         registerListener('addedSeller', this.handleLoadingCars, this);
         registerListener('endDeletingSeller', this.handleHideCars, this);
         registerListener('editedModel', this.handleEditedModel, this);
+        registerListener('fetchedModels', this.handleFetchedModels, this);
     }
     
     disconnectedCallback() {
@@ -91,6 +97,15 @@ export default class ShowCarsBySeller extends LightningElement {
     // Hide cars
     handleHideCars() {
         this.sellersAdded = false;
+    }
+
+    // Handle fetched models
+    async handleFetchedModels({models}) {
+        if(models.length === 0) {
+            this.areThereModels = false;
+        } else {
+            this.areThereModels = true;
+        }
     }
 
     // Show cars

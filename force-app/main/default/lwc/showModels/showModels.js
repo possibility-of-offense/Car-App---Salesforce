@@ -36,6 +36,10 @@ export default class ShowModels extends LightningElement {
                 showModels,
                `Error while getting models! Try reloading the browser!`
         ));
+        
+        fireEvent(this.pageRef, 'fetchedModels', {
+            models: this.models
+        })
     }
 
     // Add model
@@ -71,6 +75,9 @@ export default class ShowModels extends LightningElement {
                     variant: 'success',
                 })
             );
+            fireEvent(this.pageRef, 'fetchedModels', {
+                models: this.models
+            })
         }
     }
 
