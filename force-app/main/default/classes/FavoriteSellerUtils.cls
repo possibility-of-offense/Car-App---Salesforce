@@ -1,4 +1,5 @@
 public with sharing class FavoriteSellerUtils {
+    // Add favorites
     @AuraEnabled
     public static Boolean addToFavorites(String sellerId) {
         try {
@@ -35,6 +36,20 @@ public with sharing class FavoriteSellerUtils {
         }
     }
 
+    // Show all favorites
+    @AuraEnabled
+    public static List<Favorite_Seller__c> showAllFavorites(){
+        try {
+            return [SELECT Id, Seller_custom__r.Name, Seller_custom__r.Number_of_cars__c FROM Favorite_Seller__c ORDER BY CreatedDate];
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    // Helper internal functions
+    // Helper internal functions
+    // Helper internal functions
     public static void resetState() {
         FavoriteSellerUtils.deleteFavoriteAndResetSellers();
     }

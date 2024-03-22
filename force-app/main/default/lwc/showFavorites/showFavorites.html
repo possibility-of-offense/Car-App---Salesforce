@@ -1,0 +1,18 @@
+<template>
+    <lightning-modal-header label="Favorite Sellers"></lightning-modal-header>
+    <lightning-modal-body>
+        <template lwc:if={areThereFavorites} for:each={favorites} for:item="favorite">
+           <div key={favorite.Id} class="single-favorite">
+                <lightning-icon 
+                    icon-name="standard:avatar" 
+                    alternative-text="Seller" 
+                    title={favorite.Seller_custom__r.Name}></lightning-icon>
+                <div>
+                    <h3>{favorite.Seller_custom__r.Name}</h3>
+                    <p>Number of cars: {favorite.Seller_custom__r.Number_of_cars__c}</p>
+                </div>
+           </div>
+        </template>
+        <h3 class="slds-text-align_center" lwc:else>No favorites yet!</h3>
+    </lightning-modal-body>
+</template>

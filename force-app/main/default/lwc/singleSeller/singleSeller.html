@@ -7,16 +7,21 @@
         <c-spinner show-spinner={ajaxLoading}></c-spinner>
 
         <div class="icons">
-            <lightning-button-icon
-                alternative-text={showText}
-                variant={showVariantBaseOnFavorite}
-                title={showText} 
-                onclick={handleClickFavoriteButton} 
-                class="add-to-favorites-icon"
-                icon-name="utility:heart"
-            >
-                <label>Delete seller</label>
-            </lightning-button-icon>
+            <div class="favorites__wrapper">
+                <lightning-button-icon
+                    alternative-text={showText}
+                    variant={showVariantBaseOnFavorite}
+                    title={showText} 
+                    onclick={handleClickFavoriteButton} 
+                    class="add-to-favorites-icon"
+                    icon-name="utility:heart"
+                >
+                    <label>Delete seller</label>
+                </lightning-button-icon>
+                <div lwc:if={showFavoritesButton} class="show-favorites">
+                    <button onclick={handleShowFavorites}>Show all favorites</button>
+                </div>
+            </div>
             &nbsp;
             <lightning-button-icon
                 alternative-text="Delete seller"
